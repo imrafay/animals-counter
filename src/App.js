@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import '../node_modules/bulma/css/bulma.css';
+import { useState } from 'react';
+import AnimalCard from './AnimalCard';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function getRandomAnimal(){
+    const animals = ['cow','dog','cat','horse','gator','bird'];
+    const randomIndex = Math.floor(Math.random() * animals.length);
+    return animals[randomIndex];
 }
 
-export default App;
+function App()
+{
+    const [animals, setanimals] = useState([])
+
+    const addAnimalClick = () => {
+        setanimals([...animals,getRandomAnimal()]);
+    };
+
+    const animalList = animals.map((animal,index)=>{
+       return <AnimalCard type={animal} key={index}/>
+    });
+
+    return (<div>
+        <section className="section">
+            <div className="columns">
+            <button onClick={addAnimalClick} className='button' onClic>Add Animal</button>     
+            </div>
+            </section>
+         <section className="section">
+            <div className="columns">
+                
+                    {animalList}
+                </div>
+            </section>
+    </div>);
+}
+
+export default App
